@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 .uv-cache/
 .pytest_cache/
+*.egg-info/
 
 # runtime data: uploads, results, job db
 data/
