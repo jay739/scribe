@@ -1,0 +1,23 @@
+# environments and caches
+.venv/
+__pycache__/
+*.pyc
+.uv-cache/
+.pytest_cache/
+
+# runtime data: uploads, results, job db
+data/
+
+# model weights (HF_HOME lives here)
+models/
+
+# local config
+.env
+
+# generated dependency catalog, never pushed
+docs/PACKAGES.md
+
+# editor noise
+.vscode/
+.idea/
+Thumbs.db
