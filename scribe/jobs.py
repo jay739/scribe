@@ -62,8 +62,10 @@ def _update(job_id: str, **fields) -> None:
         _db().commit()
 
 
-def create(filename: str, upload_path: Path, options: dict) -> str:
-    job_id = uuid.uuid4().hex[:12]
+def create(
+    filename: str, upload_path: Path, options: dict, job_id: str | None = None
+) -> str:
+    job_id = job_id or uuid.uuid4().hex[:12]
     now = time.time()
     with _db_lock:
         _db().execute(

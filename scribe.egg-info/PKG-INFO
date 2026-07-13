@@ -1,0 +1,103 @@
+Metadata-Version: 2.4
+Name: scribe
+Version: 0.1.0
+Summary: Self-hosted GPU transcription with speaker labels. An open-source Otter.ai alternative.
+Author-email: Jayakrishna Konda <contact@jay739.dev>
+License: MIT License
+        
+        Copyright (c) 2026 Jayakrishna Konda
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Requires-Python: <3.13,>=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: faster-whisper>=1.1.0
+Requires-Dist: pyannote.audio>=3.3.0
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn>=0.30
+Requires-Dist: python-multipart>=0.0.9
+Requires-Dist: python-dotenv>=1.0
+Requires-Dist: numpy
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Dynamic: license-file
+
+# scribe
+
+Self-hosted, GPU-accelerated transcription with speaker labels. An open-source alternative to Otter.ai that runs entirely on your own hardware.
+
+- **Whisper large-v3** via [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (CTranslate2, CUDA, int8_float16)
+- **Speaker diarization** via [pyannote.audio](https://github.com/pyannote/pyannote-audio) (optional, needs a free Hugging Face token)
+- **Web UI**: drag and drop a file, watch progress, read a color-coded transcript
+- **API**: upload, poll, fetch results as JSON
+- **CLI**: `scribe transcribe meeting.mp3 --diarize -f srt`
+- **Exports**: TXT, SRT, VTT, JSON, Markdown
+
+No cloud, no accounts, no per-minute billing. Your audio never leaves the machine.
+
+## Requirements
+
+- NVIDIA GPU with CUDA support (tested on an RTX 3060 Ti, 8 GB VRAM). CPU works but is slow.
+- Windows or Linux, Python 3.12 (the setup script installs its own via [uv](https://github.com/astral-sh/uv))
+- Roughly 6 GB of disk for models on first run
+
+## Quick start (Windows)
+
+```powershell
+git clone https://github.com/jay739/scribe && cd scribe
+powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
+.venv\Scripts\python -m scribe.server
+```
+
+Then open http://localhost:8323.
+
+### Speaker diarization setup
+
+Diarization uses `pyannote/speaker-diarization-3.1`, which is a gated model:
+
+1. Create a free token at https://huggingface.co/settings/tokens
+2. Accept the conditions at https://huggingface.co/pyannote/speaker-diarization-3.1 and https://huggingface.co/pyannote/segmentation-3.0
+3. Put the token in `.env`: `SCRIBE_HF_TOKEN=hf_...`
+
+Without a token scribe still transcribes, it just cannot tell speakers apart.
+
+## CLI
+
+```powershell
+.venv\Scripts\python -m scribe.cli transcribe path\to\audio.mp3 --diarize -f srt -o out\
+```
+
+## Configuration
+
+Everything is an environment variable (or a line in `.env` at the repo root):
+
+| Variable            | Default        | Meaning                                    |
+| ------------------- | -------------- | ------------------------------------------ |
+| `SCRIBE_MODEL`      | `large-v3`     | Whisper model size (`tiny` ... `large-v3`) |
+| `SCRIBE_DEVICE`     | `cuda`         | `cuda` or `cpu`                            |
+| `SCRIBE_COMPUTE`    | `int8_float16` | CTranslate2 compute type                   |
+| `SCRIBE_HF_TOKEN`   | unset          | Hugging Face token for diarization         |
+| `SCRIBE_PORT`       | `8323`         | Server port                                |
+| `SCRIBE_DATA_DIR`   | `./data`       | Uploads, results, job database             |
+| `SCRIBE_MODELS_DIR` | `./models`     | Model cache (HF_HOME points here)          |
+
+## License
+
+MIT

@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+scribe/__init__.py
+scribe/audio.py
+scribe/config.py
+scribe/cuda_dlls.py
+scribe.egg-info/PKG-INFO
+scribe.egg-info/SOURCES.txt
+scribe.egg-info/dependency_links.txt
+scribe.egg-info/entry_points.txt
+scribe.egg-info/requires.txt
+scribe.egg-info/top_level.txt

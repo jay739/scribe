@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import shutil
+import uuid
 from pathlib import Path
 from typing import Optional
 
@@ -64,21 +65,19 @@ async def create_job(
             400,
             f"unsupported file type {suffix!r}. Allowed: {sorted(ALLOWED_SUFFIXES)}",
         )
-    # reserve an id-stable path, then stream the upload to disk
-    tmp_name = f"incoming-{file.filename}"
-    job_id = None
+    # the file must be fully on disk at its final path before the job is
+    # enqueued, otherwise the worker can race the rename
+    upload_id = uuid.uuid4().hex[:12]
+    upload_path = config.UPLOADS_DIR / f"{upload_id}{suffix}"
     try:
-        upload_path = config.UPLOADS_DIR / tmp_name
         with upload_path.open("wb") as out:
             shutil.copyfileobj(file.file, out)
         job_id = jobs.create(
             filename=file.filename or "upload",
             upload_path=upload_path,
             options={"diarize": diarize, "language": language},
+            job_id=upload_id,
         )
-        final_path = config.UPLOADS_DIR / f"{job_id}{suffix}"
-        upload_path.rename(final_path)
-        jobs._update(job_id, upload_path=str(final_path))
         return {"id": job_id}
     finally:
         await file.close()
