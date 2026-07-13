@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>scribe</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#127908;</text></svg>"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>scribe</h1>
+      <p class="tagline">local transcription with speaker labels</p>
+      <div id="health" class="health"></div>
+    </header>
+
+    <main>
+      <section id="dropzone" class="dropzone" tabindex="0">
+        <input
+          type="file"
+          id="fileInput"
+          accept="audio/*,video/*"
+          multiple
+          hidden
+        />
+        <p><strong>Drop audio or video here</strong> or click to choose</p>
+        <p class="hint">mp3, wav, m4a, flac, ogg, mp4, mkv, webm ...</p>
+        <label class="opt">
+          <input type="checkbox" id="diarizeToggle" checked />
+          label speakers (diarization)
+        </label>
+      </section>
+
+      <section id="jobs" class="jobs"></section>
+
+      <section id="viewer" class="viewer" hidden>
+        <div class="viewer-head">
+          <h2 id="viewerTitle"></h2>
+          <div class="exports" id="exports"></div>
+          <button id="closeViewer" title="close">&#10005;</button>
+        </div>
+        <div id="viewerMeta" class="viewer-meta"></div>
+        <div id="transcript" class="transcript"></div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

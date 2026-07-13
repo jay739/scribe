@@ -1,0 +1,264 @@
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --text: #1a1d21;
+  --muted: #6a7178;
+  --border: #dde1e6;
+  --accent: #2563eb;
+  --ok: #16a34a;
+  --err: #dc2626;
+  --warn: #b45309;
+  --sp1: #2563eb;
+  --sp2: #d97706;
+  --sp3: #059669;
+  --sp4: #db2777;
+  --sp5: #7c3aed;
+  --sp6: #0891b2;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101317;
+    --panel: #181c22;
+    --text: #e7eaee;
+    --muted: #8b939c;
+    --border: #2a313a;
+    --accent: #60a5fa;
+    --ok: #4ade80;
+    --err: #f87171;
+    --warn: #fbbf24;
+    --sp1: #60a5fa;
+    --sp2: #fbbf24;
+    --sp3: #34d399;
+    --sp4: #f472b6;
+    --sp5: #a78bfa;
+    --sp6: #22d3ee;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 2rem 1.25rem 4rem;
+  font:
+    16px/1.55 system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  letter-spacing: 0.01em;
+}
+.tagline {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+}
+.health {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.health .warn {
+  color: var(--warn);
+}
+
+.dropzone {
+  margin-top: 1.5rem;
+  padding: 2.25rem 1.5rem;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.dropzone.drag {
+  border-color: var(--accent);
+}
+.dropzone p {
+  margin: 0.25rem 0;
+}
+.dropzone .hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.dropzone .opt {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.jobs {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.job {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.8rem 1rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.job .name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.job .status {
+  font-size: 0.85rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.job .status.done {
+  color: var(--ok);
+}
+.job .status.error {
+  color: var(--err);
+}
+.job button {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.job button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.progress {
+  width: 130px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.progress > div {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.4s;
+}
+
+.viewer {
+  margin-top: 1.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+}
+.viewer-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.viewer-head h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.viewer-head button {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.exports {
+  display: flex;
+  gap: 0.4rem;
+}
+.exports a {
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 0.25rem 0.55rem;
+}
+.exports a:hover {
+  border-color: var(--accent);
+}
+
+.viewer-meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0.4rem 0 0.9rem;
+}
+.viewer-meta .warn {
+  color: var(--warn);
+}
+
+.transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.utt {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 0.7rem;
+}
+.utt .t {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.2rem;
+}
+.utt .who {
+  font-weight: 700;
+  margin-right: 0.45rem;
+}
+.utt.s1 .who {
+  color: var(--sp1);
+}
+.utt.s2 .who {
+  color: var(--sp2);
+}
+.utt.s3 .who {
+  color: var(--sp3);
+}
+.utt.s4 .who {
+  color: var(--sp4);
+}
+.utt.s5 .who {
+  color: var(--sp5);
+}
+.utt.s6 .who {
+  color: var(--sp6);
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 1rem 0;
+}
