@@ -1,0 +1,44 @@
+name: Release
+
+# Push a semver tag to publish the Python package to a GitHub release:
+#   git tag v0.2.0 && git push origin v0.2.0
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run tests first
+        run: |
+          pip install pytest
+          python -m pytest tests -q
+      - name: Build wheel and sdist
+        run: |
+          pip install build
+          python -m build
+      - name: Upload run artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scribe-dist
+          path: dist/*
+      - name: Attach to GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          body: |
+            Install with: pip install <wheel file>
+            Note the CUDA/GPU requirements in the README; models download on
+            first run.
