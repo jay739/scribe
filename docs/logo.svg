@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect x="0" y="0" width="512" height="512" rx="123" ry="123" fill="#0B0D10"/>
+  <g id="icon">
+    <!-- Speaker A: two bold bars, taller, dominant weight -->
+    <rect x="126" y="166" width="66" height="180" rx="33" fill="#4A9EFF"/>
+    <rect x="222" y="106" width="66" height="300" rx="33" fill="#4A9EFF"/>
+    <!-- Speaker B: offset shorter bar, distinct visual weight, interleaved -->
+    <rect x="318" y="226" width="66" height="60" rx="30" fill="#4A9EFF"/>
+    <!-- Contrast accent: small off-white dot marking a "speaker turn" cue -->
+    <circle cx="351" cy="166" r="20" fill="#F2F0EA"/>
+  </g>
+</svg>
