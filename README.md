@@ -1,5 +1,9 @@
 # scribe
 
+<p align="center">
+  <img src="docs/logo.svg" alt="scribe logo" width="128" />
+</p>
+
 Self-hosted, GPU-accelerated transcription with speaker labels. An open-source alternative to Otter.ai that runs entirely on your own hardware.
 
 No cloud, no accounts, no per-minute billing. Your audio never leaves the machine.
