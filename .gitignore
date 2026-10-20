@@ -22,3 +22,7 @@ docs/PACKAGES.md
 .vscode/
 .idea/
 Thumbs.db
+
+# AI build specs and session reports: kept locally, never committed
+MISSION*.md
+REPORT.md
